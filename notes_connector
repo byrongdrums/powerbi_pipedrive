@@ -1,0 +1,12 @@
+// Please, create first the fnotes function before to call this query
+let
+	Source = List.Generate(()=>
+	[Result = if Table.IsEmpty(fnotes(0)) then null else fnotes(0) , Page=0],
+each  [Result] <> null,
+each [Result =  if Table.IsEmpty(fnotes([Page]+500)) then null else fnotes([Page]+500) , Page=[Page]+500],
+each [Result]),
+    #"Convertida en tabla" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error)
+in
+    #"Convertida en tabla"
+    
+//now just expand until you get your data
