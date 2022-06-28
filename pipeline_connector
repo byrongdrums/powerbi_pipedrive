@@ -1,0 +1,7 @@
+let
+    Origen = Json.Document(Web.Contents("https://yourcompany.pipedrive.com/v1/pipelines?api_token=y0uRc0mp4nyt9k3n")),
+    #"Convertida en tabla" = Table.FromRecords({Origen}),
+    #"Se expandió data" = Table.ExpandListColumn(#"Convertida en tabla", "data")
+in
+    #"Se expandió data"
+//now just expand until you get your data
