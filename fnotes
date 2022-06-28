@@ -1,0 +1,12 @@
+// Custom function for take de notes or every collection pagination when the collection don't have the "get_summmary" parameter
+// I recomend to watch the video because maybe you will need to make some changes to your own case because you have more or less columns
+// The step in line 10 is key for this purpose, please check the video if you don't understand the goal of the query
+(Page as number)=>
+let
+    Origen = Json.Document(Web.Contents("https://yourcompany.pipedrive.com/v1/notes?api_token=y0uRc0mp4nyt9k3n", [Query=[api_token="y0uRc0mp4nyt9k3n", limit="500", pinned_to_person_flag="0", start= Number.ToText(Page)]])),
+    #"Convertida en tabla" = Table.FromRecords({Origen}),
+    #"Se expandió data" = Table.ExpandListColumn(#"Convertida en tabla", "data"),
+    #"Se expandió data1" = Table.ExpandRecordColumn(#"Se expandió data", "data", {"id", "user_id", "deal_id", "person_id", "org_id", "lead_id", "content", "add_time", "update_time", "active_flag", "pinned_to_deal_flag", "pinned_to_person_flag", "pinned_to_organization_flag", "pinned_to_lead_flag", "last_update_user_id", "organization", "person", "deal", "lead", "user"}, {"data.id", "data.user_id", "data.deal_id", "data.person_id", "data.org_id", "data.lead_id", "data.content", "data.add_time", "data.update_time", "data.active_flag", "data.pinned_to_deal_flag", "data.pinned_to_person_flag", "data.pinned_to_organization_flag", "data.pinned_to_lead_flag", "data.last_update_user_id", "data.organization", "data.person", "data.deal", "data.lead", "data.user"}),
+    #"Filas filtradas" = Table.SelectRows(#"Se expandió data1", each [data.id] <> null and [data.id] <> "")
+in
+    #"Filas filtradas"
