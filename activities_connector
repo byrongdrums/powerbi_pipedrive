@@ -1,0 +1,10 @@
+let
+    Origen = Json.Document(Web.Contents("https://yourcompany.pipedrive.com/v1/activities?api_token=y0uRc0mp4nyt9k3n")),
+    #"Convertida en tabla" = Table.FromRecords({Origen}),
+    #"Se expandió additional_data" = Table.ExpandRecordColumn(#"Convertida en tabla", "additional_data", {"pagination"}, {"additional_data.pagination"}),
+    #"Se expandió additional_data.pagination" = Table.ExpandRecordColumn(#"Se expandió additional_data", "additional_data.pagination", {"start", "limit", "more_items_in_collection"}, {"additional_data.pagination.start", "additional_data.pagination.limit", "additional_data.pagination.more_items_in_collection"})
+in
+    #"Se expandió additional_data.pagination"
+    
+
+//now just expand until you get your data
