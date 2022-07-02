@@ -1,5 +1,5 @@
 // Custom function for take the notes or every collection pagination when the collection don't have the "get_summmary" parameter
-// I recomend to watch the video because maybe you will need to make some changes to your own case because you have more or less columns
+// I recomend to watch the video because maybe you will need to make some changes to your own case because you could have more or less columns
 // The step in line 10 is key for this purpose, please check the video if you don't understand the goal of the query
 (Page as number)=>
 let
